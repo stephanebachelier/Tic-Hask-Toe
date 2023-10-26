@@ -6,57 +6,81 @@ import Data.Char (toUpper)
 
 -- Q#01
 
-_SIZE_ = undefined
+_SIZE_ :: Int
+_SIZE_ = 3
 
 -- Q#02
 
-_DISPLAY_LOGO_ = undefined
+_DISPLAY_LOGO_ :: Bool
+_DISPLAY_LOGO_ = True
 
 -- Q#03
 
-convertRowIndex = undefined
+convertRowIndex :: Char -> Int
+convertRowIndex c = fromEnum (toUpper c) - 65
 
 -- Q#04
 
-_INVALID_MOVE_ = undefined
+_INVALID_MOVE_ :: (Int, Int) 
+_INVALID_MOVE_ = (-1, -1) 
 
 -- Q#05
 
-_SEP_ = undefined
+_SEP_ = "_|_"
 
 -- *** Assignment 1-2 *** --
 
 -- Q#06
-data Square
-
+data Square = X | O | Void deriving (Show, Eq)
 
 -- Q#07
-data GameState
+data GameState = Xwon | Owon | Tie | Progress deriving (Show, Eq)
+
 
 
 -- Q#08
 
-
-
-
+type Player = Square
+type Row = [Square]
+type Line = [Square]
+type Board = [Row]
+type Move = (Int, Int)
 
 
 -- Q#09
 
-getFirstPlayer = undefined
+getFirstPlayer :: Bool -> Player
+getFirstPlayer input =
+  if input == True
+    then X
+  else O
 
-
-getFirstPlayer_ = undefined
+getFirstPlayer_ :: Bool -> Player
+getFirstPlayer_ input
+  | input == True = X
+  | input == False = O
 
 -- Q#10
 
-showGameState gs = undefined
+showGameState :: GameState -> String
+showGameState gs = case gs of
+  Xwon -> "X won the game"
+  Owon -> "O won the game"
+  Tie -> "The game is a tie"
+  Progress -> "The game is in progress"
 
 -- Q#11
 
-switchPlayer = undefined
+switchPlayer :: Player -> Player
+switchPlayer X = O
+switchPlayer O = X
+switchPlayer Void = Void
 
 
 -- Q#12
 
-showSquare = undefined
+showSquare :: Square -> String
+showSquare square
+  | square == X = "X"
+  | square == O = "O"
+  | square == Void = "_"
