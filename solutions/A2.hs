@@ -10,7 +10,8 @@ import Data.List (intercalate)
 -- Q#01
 
 promptPlayer :: Player -> String
-promptPlayer p = "Player " ++ show p ++ " # enter a value: "
+-- promptPlayer p = "Player " ++ show p ++ "'s turn: enter a row and column position (ex. A1)"
+promptPlayer p = concat ["Player ", show p, "'s turn: enter a row and column position (ex. A1)"]
 
 -- Q#02
 
@@ -57,7 +58,7 @@ indexRowStrings stringList =
 
 formatLine :: [String] -> String
 formatLine stringList =
-  _SEP_ ++ (intercalate _SEP_ stringList) ++ _SEP_
+  concat [_SEP_, (intercalate _SEP_ stringList), _SEP_]
 
 -- *** Assignment 2-2 *** --
 
