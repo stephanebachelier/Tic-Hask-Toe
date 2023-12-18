@@ -3,7 +3,7 @@
 module A2 where
 
 import A1
-import Data.List (intercalate)
+import Data.List (intercalate, and)
 
 -- *** Assignment 2-1 *** --
 
@@ -64,12 +64,31 @@ formatLine stringList =
 
 -- Q#08
 
-isMoveInBounds = undefined
-
+isMoveInBounds :: Move -> Bool
+isMoveInBounds (row, col) =
+  and [
+    elem row _RANGE_,
+    elem col _RANGE_
+  ]
 -- Q#09
 
-stringToMove = undefined
+stringToMove :: String -> Move
+stringToMove []               = _INVALID_MOVE_
+stringToMove [_]              = _INVALID_MOVE_
+stringToMove [letter, digit]  = (convertRowIndex letter, readDigit digit)
+stringToMove _                = _INVALID_MOVE_
 
 -- Q#10
 
-replaceSquareInRow = undefined
+replaceSquareInRow :: Player -> Int -> Row -> Row
+replaceSquareInRow player index row
+  | null row        = row
+  | index < 0       = row
+  | index >= _SIZE_ = row
+  | otherwise       = head ++ [player] ++ tail
+  where
+    (head, _:tail) = splitAt index row
+
+rsX :: Int -> Row -> Row
+rsX = replaceSquareInRow X
+rsO = replaceSquareInRow O
