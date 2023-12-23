@@ -67,16 +67,35 @@ getAllLines rows = rows ++ transpose rows ++ [getDiag1 rows, getDiag2 rows]
 
 -- Q#07
 
-putSquare = undefined
+putSquare :: Player -> Board -> Move -> Board
+putSquare _ [] _ = []
+putSquare p (r:rs) (0,y) = (replaceSquareInRow p y r):rs
+putSquare p (r:rs) (x,y) = [r] ++ putSquare p rs (x-1,y)
 
 -- Q#08
-
-prependRowIndices = undefined
+prependRowIndices :: [String] -> [String]
+prependRowIndices rows = go (indexRowStrings rows) where
+  go :: [(Char, String)] -> [String]
+  go [] = []
+  go ((c,s):xs) = ([c] ++ s): go xs
 
 -- Q#09
 
-isWinningLine = undefined
+isWinningLine :: Player -> Line -> Bool
+isWinningLine _       []    = False
+isWinningLine player  line  = go False line where
+  go :: Bool -> [Square] -> Bool
+  go acc []       = acc
+  go acc (sq:sqs) = if sq /= player then False else go True sqs
 
 -- Q#10
 
-isValidMove = undefined
+isValidMove :: Board -> Move -> Bool
+isValidMove board move = 
+  if isMoveInBounds move == False 
+  then False 
+  else go board move where
+    go :: Board -> Move -> Bool
+    go []     _       = False 
+    go (r:rs) (0, y)  = isColEmpty r y
+    go (r:rs) (x, y)  = go rs (x - 1, y)
