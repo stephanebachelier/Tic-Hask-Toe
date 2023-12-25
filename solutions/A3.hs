@@ -28,7 +28,8 @@ showSquares (x:xs)  = [showSquare x] ++ showSquares xs
 -- Q#03
 
 formatRows :: [Row] -> [String]
-formatRows rows = map (formatLine . showSquares) rows
+formatRows [] = []
+formatRows (r:rs) = [(formatLine . showSquares $ r)] ++ formatRows rs
 
 -- Q#04
 
@@ -44,11 +45,13 @@ isColEmpty (x:y:z)  n
 -- Q#05
 
 dropFirstCol :: Board -> Board
-dropFirstCol rows = map (\(x:xs) -> xs) rows
+dropFirstCol [] = []
+dropFirstCol ((x:xs):tail) = [xs] ++ dropFirstCol tail
 
 
 dropLastCol :: Board -> Board
-dropLastCol rows = map (\row -> init row) rows
+dropLastCol [] = []
+dropLastCol (x:xs) = [init x] ++ dropLastCol xs
 
 -- Q#06
 getDiag1 :: Board -> Line
